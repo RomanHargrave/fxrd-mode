@@ -57,8 +57,8 @@
 
 ;; This changed around emacs 25
 (eval-when-compile
-  (when (not (boundp 'default-mode-line-format))
-    (defvar default-mode-line-format (default-value 'mode-line-format))))
+  (when (not (boundp 'mode-line-format))
+    (setq-default mode-line-format (default-value 'mode-line-format))))
 
 (defface fxrd-current-field-face
   '((t (:inherit highlight
@@ -76,16 +76,16 @@
 
 (defconst fxrd-mode-line-help-echo
   ;; See bindings.el for details of `mode-line-format' construction.
-  (get-text-property 0 'help-echo (car default-mode-line-format))
+  (get-text-property 0 'help-echo (car (default-value mode-line-format)))
   "Primary default mode line help echo text.")
 
 (defconst fxrd-mode-line-format
   ;; See bindings.el for details of `mode-line-format' construction.
-  (append (butlast default-mode-line-format 2)
+  (append (butlast (default-value mode-line-format) 2)
 	  (cons `(fxrd-field-name-string
 		  ("" fxrd-field-name-string
 		   ,(propertize "" 'help-echo fxrd-mode-line-help-echo)))
-		(last default-mode-line-format 2)))
+		(last (default-value mode-line-format) 2)))
   "Mode line format string for FXRD mode.")
 
 (defconst fxrd-font-lock-keywords-1
